@@ -10,9 +10,10 @@ Template for creating apps for build and deploy on octue
 
 2. Choose a name for your new repository. Call it whatever you like!
 
-3. Clone your new app template to begin work. From the terminal of your computer:
+3. Clone your new app template to begin work. You'll need the Octue SDK too. From the terminal of your computer:
 ```
 git clone https://github.com/<you>/<your-repo-name>
+git clone https://github.com/octue/octue-sdk-matlab
 ```
 
 
