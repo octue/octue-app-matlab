@@ -1,4 +1,4 @@
-function [x, y, z, cmap] = mandelbrot(width, height, yMin, yMax, xMin, xMax, maxIterations, cmapName)
+function [x, y, z, cmap] = mandelbrot(width, height, xMin, xMax, yMin, yMax, maxIterations, cmapName)
 %MANDELBROT Creates a mandelbrot set fractal, given input parameters
 %
 % Author:                   T. H. Clark
@@ -12,12 +12,9 @@ function [x, y, z, cmap] = mandelbrot(width, height, yMin, yMax, xMin, xMax, max
 %
 % Copyright (c) 2017-2018 Octue Ltd, All Rights Reserved.
 
-% Generate linearly spaced points in x and y directions
-x = linspace(xMin, xMax, width);
-y = linspace(yMin, yMax, height);
-
 % Create a linear 2d grid
-[X, Y] = meshgrid(x, y);
+[x, y] = meshgrid(linspace(xMin, xMax, width), ...
+                  linspace(yMin, yMax, height));
 
 % Allocate output array
 z = zeros(height, width);
@@ -25,8 +22,8 @@ nPoints = width * height;
 
 % Simple and crude loop to render the fractal set
 for m = 1:nPoints
-    a = X(m);
-    b = Y(m);
+    a = x(m);
+    b = y(m);
     xn = 0;
     yn = 0;
     k = 1;
@@ -42,8 +39,8 @@ end
 
 % Generate a color map to go with it. MATLAB's maps aren't compatible with
 % plotly so we'll just use winter for the moment.
-cmap = winter(maxIterations);
-
+cmap = flipud(winter(256));
+% cmap = colormap('winter');
 end
 
 

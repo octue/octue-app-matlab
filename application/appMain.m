@@ -56,6 +56,9 @@ tags = 'contents:fractal:mandelbrot type:figure:surface';
 % TODO Upgrade to R2017a to use jsonencode
 % octue.addFigure(data, layout, tags);
 
+figure()
+h = surface(x, y, img);
+set(h, 'EdgeColor', 'none')
 
 % Register a results file
 %
