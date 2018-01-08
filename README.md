@@ -50,9 +50,29 @@ Your forked template already contains a working example app. So let's set up the
 4. [Check run status and results of your newly launched analysis]( TODO ).
 
 
+### Set up paths and the invocation commands
+
+Open `app.m`. This is the function that Octue will call to invoke your application; so this is where you get to define how the application is called:
+
+- Change the `run()` function to invoke your application code. An example is already given.
+
+- In `app.m`, update the `version()` function to return the correct version of your app. Note this is used for labelling (e.g. indicating major/minor revisions to the user). On the octue platform, unique hashes are made of each app uploaded, so that app versions are always matched exactly to analyses regardless of whether the `version()` function is up to date.
+
+- In `setup.m` at `line 26`, add paths to any subfolders in your application code, in the same way you'd add them to the MATLAB path.
+
+Move to the root directory of the SDK and run `>> setup --path` at the MATLAB prompt. This will set up the paths to allow you to locally run your app. You can always revert to your saved path either by restarting MATLAB or typing `>> setup --revert-path` at the MATLAB prompt.
+
+
 ### Next steps
 
-1. Try modifying the run() function to return different results. To re-build, simply commit your changes to the master branch, and push to GitHub.
+1. Try modifying the appMain() function to return different results. To re-build, simply commit your changes to the master branch, and push to GitHub.
+
+    1. Place any additional code into the `application` folder. This can be new or legacy MATLAB, and is subject to the following limitations:
+      - Code must be able to be compiled with the MATLAB compiler.
+      - Graphical commands (e.g. using MATLAB's `figure`) will not produce output. Instead, figures should be described in **plotly-compliant** `json` files. This is quite easy: plotly figure descriptions can be produced in very similar ways to MATLAB ones. See `figure.m` in the applications folder for examples.
+      - Interactions are not possible (e.g. with a GUI, or y/n questions at the command line). These will be seen as a program hang, and the app will timeout on octue. As a rule, these interactions should be replaced with configuration options.
+
+    2. Look in the `app.m` file in the root directory. There is a function definition, `run()`. You can modify it to call your code directly, instead of using appMain().
 
 2. You'll want to think about the control parameters, environment and files that your app should use. These can all be defined in the schema.json file, which is [described in the octue docs]( TODO ).
 
@@ -68,3 +88,39 @@ Your forked template already contains a working example app. So let's set up the
 [Help installing a GitHub App in your organisation](https://help.github.com/articles/installing-an-app-in-your-organization/)
 
 [Understanding the git workflow](https://guides.github.com/introduction/flow/)
+[A great beginner tutorial on git](http://product.hubspot.com/blog/git-and-github-tutorial-for-beginners)
+
+
+## Style guide
+
+Over several years of intense work with MATLAB, the Octue team developed a style
+guide internally. Independently, Richard Johnson (a member of The Mathworks 
+community) [developed and published a style guide](https://uk.mathworks.com/matlabcentral/fileexchange/46056-matlab-style-guidelines-2-0),
+which was nearly identical to our internal guide (which, in turn, 
+was mostly based on conventions used by The Mathworks' team, although 
+they've never published a formal style guide). We therefore collapsed our guide 
+onto Richard's.
+
+This app template and the MATLAB SDK is developed consistent to that guide.
+
+App developers are encouraged to stay consistent with this - it appears to be 
+the only published style guide for MATLAB code.
+
+Please report **- as bugs -** any deviations from the style guide to the octue team. They're not intentional and we take consistency seriously, to help you get the best out of our software!
+
+
+### New to style guides?
+
+If you've not used a style guide before, they're great. Trust us. We'd recommend
+updating your code to conform (not all at once though - [slow changes over time](https://www.joelonsoftware.com/2000/04/06/things-you-should-never-do-part-i/)!).
+
+Conformance to style guidance is extremely favourable, as it:
+
+ - Helps stamp bugs out before they even appear
+ - Saves a lot of developer time in code review
+ - Saves developers a lot of time when revisiting their own and others code
+ - Accelerates the onboarding of new developers into a team or project
+ - (in some cases) Improves the ability of automated code analysis tools like m-lint to detect inefficiencies and variable scopes
+
+
+Copyright (c) 2017-2018 Octue Ltd, All Rights Reserved.
