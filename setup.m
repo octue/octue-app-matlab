@@ -13,10 +13,17 @@ switch cmd
         % Save the current path setup
         originalPath = path;
         
-        % Include the octue SDK package, with subfolder recursion to include the
-        % third party modules
-        addpath(genpath(fullfile(pwd, '..', 'octue-sdk-matlab', 'thirdparty')))
+        % Include the +octue package in the SDK (no subfolder recursion to avoid
+        % adding .git folders to the path)
+        addpath(fullfile(pwd, '..', 'octue-sdk-matlab'))
         
+        % Include the third party modules as required
+        addpath(genpath(fullfile(pwd, '..', 'octue-sdk-matlab', 'thirdparty', 'logging')))
+        addpath(genpath(fullfile(pwd, '..', 'octue-sdk-matlab', 'thirdparty', 'plotly')))
+        if verLessThan('matlab', '9.2')
+            % R2016b introduced the jsonencode functions
+            addpath(genpath(fullfile(pwd, '..', 'octue-sdk-matlab', 'thirdparty', 'r2016a_patch')))
+        end
         
         % -------------------------   EDIT HERE   ------------------------------
         
