@@ -26,7 +26,7 @@ setup --path
 try
     
     % Build the matlab function into an executable
-    mcc -e -d build app
+    mcc -e -d build/package app
 
     % Get version information from the app
     disp('Built app. Registering application version...')
@@ -38,8 +38,12 @@ try
             % Run the shell script to get the version (could get it directly
             % by calling app.m, but this checks that the app runner works so
             % kills two birds with one stone)
-            [~, result] = system(sprintf('. build/octue.sh %s build/app version', mcrRoot));
-            result = strrep(result, newline, '');
+            [status, result] = system(sprintf('build/package/run_app.sh %s version', mcrRoot));
+            result = split(string(result));
+            result = char(result(end-1));
+            if status ~= 0
+                error(['Incorrect system call for application version. Error was: ' result])
+            end
         end
         fprintf('Application version registered: %s\n', result)
         
@@ -53,22 +57,14 @@ try
     info.build_time = posixtime(datetime);
     info.matlab_ver = ver;
     info.matlab_path = path;
-    octue.writeConfig(info, fullfile('build','build.info'))
+    octue.writeConfig(info, fullfile('build', 'package', 'build.info'))
     
-    % Add the built files to a manifest
+    % Add the built files to a manifest. They can (and do) change arbitrarily 
+    % between releases, so we simply zip the bundle
     manifest = octue.Manifest('build');
-    manifest.Append(fullfile('build', 'app'), 'build:mcc:exe')
-    if ispc
-        % TODO what's the equivalent script on windows? A *.bat?
-    else
-        manifest.Append(fullfile('.','build','run_app.sh'), 'build:mcc:sh')
-        % Temporary kludge - use our own script to get around MCC's
-        % inflexibility for app name and location
-        manifest.Append(fullfile('.','build','octue.sh'), 'app:sh')
-    end
-    manifest.Append(fullfile('build','build.log'), 'build:log')
-    manifest.Append(fullfile('build','build.info'), 'build:info json')
-    manifest.Append(fullfile('build','requiredMCRProducts.txt'), 'build:mcc:mcrrequired')
+    zip(fullfile('build', 'package'),{'build/package/*'});
+    manifest.Append(fullfile('build', 'package.zip'), 'build:mcc:zip')
+    manifest.Append(fullfile('build', 'build.log'), 'build:mcc:log')
     
     % Save the manifest of build files
     manifest.Save(fullfile('build','manifest.json'))

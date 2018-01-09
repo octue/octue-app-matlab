@@ -1,0 +1,10 @@
+{"uuid": "bec3742f-70f0-4aca-9044-566549834a89", "type": "build", "files": [{"name": "build/package.zip", 
+ "uuid": "",
+ "key": "build:mcc:zip",
+ "tags": ""
+}, {"name": "build/build.log", 
+ "uuid": "",
+ "key": "build:mcc:log",
+ "tags": ""
+}]
+}
