@@ -4,19 +4,19 @@
 			"description": "Number of pixels the image contains in the x direction",
 			"type": "integer",
 			"minimum": 2,
-			"default": 2000
+			"default": 600
 		},
 		"height": {
 			"description": "Number of pixels the image contains in the y direction",
 			"type": "integer",
 			"minimum": 2,
-			"default": 2000
+			"default": 600
 		},
 		"max_iterations": {
 			"description": "Maximum number of iterations used to render each pixel",
 			"type": "integer",
 			"minimum": 2,
-			"default": 128
+			"default": 64
 		},
 		"color_scale": {
 			"description": "The colour scale string to use when mapping colours. See https://plot.ly/ipython-notebooks/color-scales/ for valid scales",
