@@ -36,7 +36,7 @@ function run()
 %RUN Runs an application (locally, or deployed on the octue platform)
 
 dispnow('Running the application...')
-my_main_fcn();
+main();
 
 end
 

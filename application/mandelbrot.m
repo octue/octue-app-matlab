@@ -39,8 +39,7 @@ end
 
 % Generate a color map to go with it. MATLAB's maps aren't compatible with
 % plotly so we'll just use winter for the moment.
-cmap = flipud(winter(256));
-% cmap = colormap('winter');
+cmap = winter(maxIterations);
 end
 
 
