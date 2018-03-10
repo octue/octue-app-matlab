@@ -33,7 +33,9 @@ cfg = analysis.Config;
             
 % Register a figure on the Octue system
 %
-%   Figures are a special file type on Octue, which can be 
+%   Figures are a special file type on Octue, which can be rendered into reports
+%   or shared. Of course, you can simply save images or other figure file
+%   formats as part of the results dataset - but here we
 %   This saves a .json file describing a figure, which will later be rendered.
 %   If you're doing a test run of the app with octue.local() the figure is
 %   rendered and displayed in your web browser.
