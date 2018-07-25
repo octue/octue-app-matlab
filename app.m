@@ -5,8 +5,9 @@ function out = app(varargin)
 
 switch command
     case 'run'
-        % Instantiate an analysis and attach it to the config getter
-        octue.get('config', octue.Analysis(args));
+        
+        % Instantiate an analysis, which attaches it to the getter
+        octue.Analysis(args);
         
         % Run the analysis code in the application folder
         main();
